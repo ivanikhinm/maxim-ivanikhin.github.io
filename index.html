@@ -1,644 +1,279 @@
+
 <!DOCTYPE html>
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Максим Иванихин — BI Developer & Data Analytics Lead</title>
+<title>Maxim Ivanikhin — BI Developer & Data Analytics Lead</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
+  /* ── THEMES ─────────────────────────────────────── */
   :root {
-    --bg: #0d0d0f;
+    --bg:      #0d0d0f;
     --surface: #141417;
-    --surface2: #1c1c21;
-    --border: #2a2a32;
-    --accent: #e8c97a;
+    --surf2:   #1c1c21;
+    --border:  #2a2a32;
+    --accent:  #e8c97a;
     --accent2: #6a7cff;
-    --text: #e8e8ec;
-    --muted: #7a7a8c;
-    --green: #4ade80;
-  }
-
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-  html { scroll-behavior: smooth; }
-
-  body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: 'DM Sans', sans-serif;
-    font-weight: 300;
-    line-height: 1.6;
-    overflow-x: hidden;
-  }
-
-  /* GRID BACKGROUND */
-  body::before {
-    content: '';
-    position: fixed;
-    inset: 0;
-    background-image:
-      linear-gradient(rgba(232,201,122,0.03) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(232,201,122,0.03) 1px, transparent 1px);
-    background-size: 60px 60px;
-    pointer-events: none;
-    z-index: 0;
-  }
-
-  /* NAV */
-  nav {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 100;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 1.2rem 3rem;
-    background: rgba(13,13,15,0.85);
-    backdrop-filter: blur(12px);
-    border-bottom: 1px solid var(--border);
-  }
-
-  .nav-logo {
-    font-family: 'DM Mono', monospace;
-    font-size: 0.85rem;
-    color: var(--accent);
-    letter-spacing: 0.1em;
-    text-decoration: none;
-  }
-
-  .nav-links {
-    display: flex;
-    gap: 2rem;
-    list-style: none;
-  }
-
-  .nav-links a {
-    color: var(--muted);
-    text-decoration: none;
-    font-size: 0.85rem;
-    letter-spacing: 0.05em;
-    transition: color 0.2s;
-  }
-
-  .nav-links a:hover { color: var(--text); }
-
-  /* HERO */
-  .hero {
-    position: relative;
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    padding: 0 3rem;
-    z-index: 1;
-  }
-
-  .hero-inner {
-    max-width: 900px;
-  }
-
-  .hero-tag {
-    font-family: 'DM Mono', monospace;
-    font-size: 0.78rem;
-    color: var(--accent);
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    margin-bottom: 1.5rem;
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-  }
-
-  .hero-tag::before {
-    content: '';
-    width: 32px;
-    height: 1px;
-    background: var(--accent);
-  }
-
-  .hero h1 {
-    font-family: 'DM Serif Display', serif;
-    font-size: clamp(3rem, 7vw, 5.5rem);
-    line-height: 1.05;
-    margin-bottom: 1.5rem;
-    color: var(--text);
-  }
-
-  .hero h1 em {
-    font-style: italic;
-    color: var(--accent);
-  }
-
-  .hero-desc {
-    font-size: 1.1rem;
-    color: var(--muted);
-    max-width: 520px;
-    margin-bottom: 2.5rem;
-    line-height: 1.8;
-  }
-
-  .hero-cta {
-    display: flex;
-    gap: 1rem;
-    flex-wrap: wrap;
-  }
-
-  .btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    padding: 0.85rem 1.8rem;
-    border-radius: 4px;
-    font-size: 0.875rem;
-    font-weight: 500;
-    text-decoration: none;
-    transition: all 0.2s;
-    letter-spacing: 0.03em;
-    cursor: pointer;
-    border: none;
-  }
-
-  .btn-primary {
-    background: var(--accent);
-    color: #0d0d0f;
-  }
-
-  .btn-primary:hover {
-    background: #f0d98a;
-    transform: translateY(-1px);
-  }
-
-  .btn-ghost {
-    background: transparent;
-    color: var(--text);
-    border: 1px solid var(--border);
-  }
-
-  .btn-ghost:hover {
-    border-color: var(--accent);
-    color: var(--accent);
-  }
-
-  .hero-stats {
-    position: absolute;
-    right: 3rem;
-    top: 50%;
-    transform: translateY(-50%);
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
-  }
-
-  .stat {
-    text-align: right;
-  }
-
-  .stat-num {
-    font-family: 'DM Serif Display', serif;
-    font-size: 2.5rem;
-    color: var(--text);
-    display: block;
-  }
-
-  .stat-label {
-    font-family: 'DM Mono', monospace;
-    font-size: 0.72rem;
-    color: var(--muted);
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-  }
-
-  /* SECTIONS */
-  section {
-    position: relative;
-    z-index: 1;
-    padding: 6rem 3rem;
-  }
-
-  .section-label {
-    font-family: 'DM Mono', monospace;
-    font-size: 0.75rem;
-    color: var(--accent);
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    margin-bottom: 0.75rem;
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-  }
-
-  .section-label::before {
-    content: '';
-    width: 24px;
-    height: 1px;
-    background: var(--accent);
-  }
-
-  .section-title {
-    font-family: 'DM Serif Display', serif;
-    font-size: clamp(2rem, 4vw, 3rem);
-    margin-bottom: 3rem;
-    line-height: 1.1;
-  }
-
-  /* STACK */
-  .stack-section {
-    background: var(--surface);
-    border-top: 1px solid var(--border);
-    border-bottom: 1px solid var(--border);
-  }
-
-  .stack-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-    gap: 1px;
-    background: var(--border);
-    border: 1px solid var(--border);
-    margin-top: 2rem;
-  }
-
-  .stack-item {
-    background: var(--surface);
-    padding: 1.5rem;
-    transition: background 0.2s;
-  }
-
-  .stack-item:hover { background: var(--surface2); }
-
-  .stack-icon {
-    font-size: 1.5rem;
-    margin-bottom: 0.75rem;
-    display: block;
-  }
-
-  .stack-name {
-    font-weight: 500;
-    font-size: 0.95rem;
-    margin-bottom: 0.3rem;
-  }
-
-  .stack-detail {
-    font-family: 'DM Mono', monospace;
-    font-size: 0.72rem;
-    color: var(--muted);
-  }
-
-  /* EXPERIENCE */
-  .exp-list {
-    display: flex;
-    flex-direction: column;
-    gap: 0;
-  }
-
-  .exp-item {
-    display: grid;
-    grid-template-columns: 200px 1fr;
-    gap: 2rem;
-    padding: 2.5rem 0;
-    border-bottom: 1px solid var(--border);
-  }
-
-  .exp-item:first-child { border-top: 1px solid var(--border); }
-
-  .exp-meta {
-    padding-top: 0.25rem;
-  }
-
-  .exp-period {
-    font-family: 'DM Mono', monospace;
-    font-size: 0.78rem;
-    color: var(--muted);
-    margin-bottom: 0.5rem;
-    display: block;
-  }
-
-  .exp-company {
-    font-size: 0.875rem;
-    color: var(--accent);
-    font-weight: 500;
-  }
-
-  .exp-role {
-    font-family: 'DM Serif Display', serif;
-    font-size: 1.3rem;
-    margin-bottom: 1rem;
-  }
-
-  .exp-points {
-    list-style: none;
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-  }
-
-  .exp-points li {
-    font-size: 0.9rem;
-    color: var(--muted);
-    padding-left: 1.2rem;
-    position: relative;
-  }
-
-  .exp-points li::before {
-    content: '→';
-    position: absolute;
-    left: 0;
-    color: var(--accent);
-    font-size: 0.75rem;
-    top: 0.1em;
-  }
-
-  /* PORTFOLIO */
-  .portfolio-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
-    gap: 1.5rem;
-  }
-
-  .portfolio-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 6px;
-    overflow: hidden;
-    transition: border-color 0.2s, transform 0.2s;
-    text-decoration: none;
-    color: inherit;
-    display: block;
-  }
-
-  .portfolio-card:hover {
-    border-color: var(--accent);
-    transform: translateY(-3px);
-  }
-
-  .card-preview {
-    height: 180px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 3rem;
-    border-bottom: 1px solid var(--border);
-    position: relative;
-    overflow: hidden;
-  }
-
-  .card-preview-bi {
-    background: linear-gradient(135deg, #1a1f3a 0%, #0f1429 100%);
-  }
-
-  .card-preview-bi::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: repeating-linear-gradient(
-      90deg,
-      transparent,
-      transparent 30px,
-      rgba(106,124,255,0.05) 30px,
-      rgba(106,124,255,0.05) 31px
-    );
-  }
-
-  /* Mini chart bars */
-  .mini-bars {
-    display: flex;
-    align-items: flex-end;
-    gap: 6px;
-    height: 80px;
-    z-index: 1;
-    position: relative;
-  }
-
-  .mini-bar {
-    width: 18px;
-    border-radius: 2px 2px 0 0;
-    background: var(--accent2);
-    opacity: 0.8;
-    animation: barPulse 2s ease-in-out infinite alternate;
-  }
-
-  .mini-bar:nth-child(1) { height: 40%; animation-delay: 0s; }
-  .mini-bar:nth-child(2) { height: 70%; animation-delay: 0.1s; background: var(--accent); }
-  .mini-bar:nth-child(3) { height: 55%; animation-delay: 0.2s; }
-  .mini-bar:nth-child(4) { height: 90%; animation-delay: 0.3s; background: var(--accent); }
-  .mini-bar:nth-child(5) { height: 65%; animation-delay: 0.4s; }
-  .mini-bar:nth-child(6) { height: 80%; animation-delay: 0.5s; background: var(--green); }
-  .mini-bar:nth-child(7) { height: 45%; animation-delay: 0.6s; }
-
-  @keyframes barPulse {
-    from { opacity: 0.6; }
-    to { opacity: 1; }
-  }
-
-  .card-body {
-    padding: 1.5rem;
-  }
-
-  .card-tag {
-    font-family: 'DM Mono', monospace;
-    font-size: 0.7rem;
-    color: var(--accent);
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    margin-bottom: 0.5rem;
-  }
-
-  .card-title {
-    font-family: 'DM Serif Display', serif;
-    font-size: 1.15rem;
-    margin-bottom: 0.5rem;
-  }
-
-  .card-desc {
-    font-size: 0.85rem;
-    color: var(--muted);
-    line-height: 1.6;
-    margin-bottom: 1rem;
-  }
-
-  .card-link {
-    font-family: 'DM Mono', monospace;
-    font-size: 0.75rem;
-    color: var(--accent);
-    display: flex;
-    align-items: center;
-    gap: 0.4rem;
-  }
-
-  .card-link::after {
-    content: '→';
-  }
-
-  /* CONTACT */
-  .contact-section {
-    background: var(--surface);
-    border-top: 1px solid var(--border);
-  }
-
-  .contact-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 4rem;
-    align-items: start;
-  }
-
-  .contact-intro {
-    font-size: 1.05rem;
-    color: var(--muted);
-    line-height: 1.8;
-    margin-bottom: 2rem;
-  }
-
-  .contact-links {
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
-  }
-
-  .contact-link {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    padding: 1rem 1.25rem;
-    background: var(--surface2);
-    border: 1px solid var(--border);
-    border-radius: 4px;
-    text-decoration: none;
-    color: var(--text);
-    font-size: 0.9rem;
-    transition: border-color 0.2s, background 0.2s;
-  }
-
-  .contact-link:hover {
-    border-color: var(--accent);
-    background: rgba(232,201,122,0.05);
-  }
-
-  .contact-link-icon {
-    width: 32px;
-    height: 32px;
-    background: var(--border);
-    border-radius: 4px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1rem;
-    flex-shrink: 0;
-  }
-
-  .contact-link-text {
-    flex: 1;
-  }
-
-  .contact-link-label {
-    font-family: 'DM Mono', monospace;
-    font-size: 0.7rem;
-    color: var(--muted);
-    display: block;
-    margin-bottom: 0.15rem;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-  }
-
-  .avail-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    padding: 0.5rem 1rem;
-    background: rgba(74,222,128,0.08);
-    border: 1px solid rgba(74,222,128,0.2);
-    border-radius: 100px;
-    font-family: 'DM Mono', monospace;
-    font-size: 0.75rem;
-    color: var(--green);
-    margin-bottom: 2rem;
-  }
-
-  .avail-dot {
-    width: 6px;
-    height: 6px;
-    background: var(--green);
-    border-radius: 50%;
-    animation: blink 1.5s ease-in-out infinite;
-  }
-
-  @keyframes blink {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.3; }
-  }
-
-  /* SERVICES */
-  .services-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-    gap: 1.5rem;
-    margin-top: 1rem;
-  }
-
-  .service-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 6px;
-    padding: 1.75rem;
-    transition: border-color 0.2s;
-  }
-
-  .service-card:hover { border-color: var(--accent2); }
-
-  .service-num {
-    font-family: 'DM Serif Display', serif;
-    font-size: 2rem;
-    color: var(--border);
-    display: block;
-    margin-bottom: 1rem;
-  }
-
-  .service-title {
-    font-weight: 500;
-    margin-bottom: 0.5rem;
-  }
-
-  .service-desc {
-    font-size: 0.875rem;
-    color: var(--muted);
-    line-height: 1.7;
-  }
-
-  /* FOOTER */
-  footer {
-    position: relative;
-    z-index: 1;
-    text-align: center;
-    padding: 2rem 3rem;
-    border-top: 1px solid var(--border);
-    font-family: 'DM Mono', monospace;
-    font-size: 0.75rem;
-    color: var(--muted);
-  }
-
-  /* SCROLL REVEAL */
-  .reveal {
-    opacity: 0;
-    transform: translateY(20px);
-    transition: opacity 0.6s ease, transform 0.6s ease;
-  }
-
-  .reveal.visible {
-    opacity: 1;
-    transform: none;
-  }
-
-  /* MOBILE */
-  @media (max-width: 768px) {
-    nav { padding: 1rem 1.5rem; }
-    .nav-links { display: none; }
-    section { padding: 4rem 1.5rem; }
-    .hero { padding: 0 1.5rem; min-height: auto; padding-top: 8rem; padding-bottom: 4rem; }
-    .hero-stats { display: none; }
-    .exp-item { grid-template-columns: 1fr; gap: 0.75rem; }
-    .contact-grid { grid-template-columns: 1fr; gap: 2rem; }
-    .portfolio-grid { grid-template-columns: 1fr; }
+    --text:    #e8e8ec;
+    --muted:   #7a7a8c;
+    --green:   #4ade80;
+    --gc:      rgba(232,201,122,0.03);
+  }
+  [data-theme="navy"] {
+    --bg:      #070d1a;
+    --surface: #0d1628;
+    --surf2:   #131f35;
+    --border:  #1e2d4a;
+    --accent:  #5b9cf6;
+    --accent2: #38bdf8;
+    --text:    #dde8f8;
+    --muted:   #6a82a8;
+    --green:   #34d399;
+    --gc:      rgba(91,156,246,0.04);
+  }
+
+  /* ── RESET ──────────────────────────────────────── */
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--bg);color:var(--text);
+    font-family:'DM Sans',sans-serif;font-weight:300;line-height:1.6;
+    overflow-x:hidden;transition:background .4s,color .4s;
+  }
+  body::before{
+    content:'';position:fixed;inset:0;
+    background-image:linear-gradient(var(--gc) 1px,transparent 1px),
+      linear-gradient(90deg,var(--gc) 1px,transparent 1px);
+    background-size:60px 60px;pointer-events:none;z-index:0;
+  }
+
+  /* ── NAV ─────────────────────────────────────────── */
+  nav{
+    position:fixed;top:0;left:0;right:0;z-index:100;
+    display:flex;align-items:center;justify-content:space-between;
+    padding:1rem 3rem;
+    background:rgba(13,13,15,.88);backdrop-filter:blur(14px);
+    border-bottom:1px solid var(--border);transition:background .4s,border-color .4s;
+  }
+  [data-theme="navy"] nav{background:rgba(7,13,26,.9)}
+  .nav-logo{font-family:'DM Mono',monospace;font-size:.8rem;color:var(--accent);letter-spacing:.1em;text-decoration:none}
+  .nav-links{display:flex;gap:1.6rem;list-style:none;align-items:center}
+  .nav-links a{color:var(--muted);text-decoration:none;font-size:.8rem;letter-spacing:.04em;transition:color .2s}
+  .nav-links a:hover{color:var(--text)}
+  .nav-controls{display:flex;align-items:center;gap:.7rem}
+
+  /* Language pill */
+  .lang-toggle{
+    display:flex;align-items:center;
+    background:var(--surf2);border:1px solid var(--border);
+    border-radius:100px;padding:3px;gap:2px;
+  }
+  .lang-btn{
+    padding:.25rem .7rem;border-radius:100px;border:none;
+    font-family:'DM Mono',monospace;font-size:.7rem;font-weight:500;
+    letter-spacing:.08em;cursor:pointer;
+    background:transparent;color:var(--muted);transition:background .2s,color .2s;
+  }
+  .lang-btn.active{background:var(--accent);color:var(--bg)}
+
+  /* Theme toggle */
+  .theme-wrap{display:flex;align-items:center;gap:.45rem}
+  .theme-label{font-family:'DM Mono',monospace;font-size:.68rem;color:var(--muted);white-space:nowrap}
+  .theme-toggle{
+    width:36px;height:20px;border-radius:100px;
+    border:1px solid var(--border);background:var(--surf2);
+    cursor:pointer;position:relative;transition:background .3s,border-color .3s;
+    flex-shrink:0;
+  }
+  .theme-toggle::after{
+    content:'';position:absolute;top:2px;left:2px;
+    width:14px;height:14px;border-radius:50%;
+    background:var(--muted);transition:transform .3s,background .3s;
+  }
+  [data-theme="navy"] .theme-toggle::after{transform:translateX(16px);background:var(--accent)}
+
+  /* ── HERO ────────────────────────────────────────── */
+  .hero{
+    position:relative;min-height:100vh;
+    display:flex;align-items:center;
+    padding:0 3rem;z-index:1;
+  }
+  .hero-inner{max-width:860px}
+  .hero-tag{
+    font-family:'DM Mono',monospace;font-size:.74rem;
+    color:var(--accent);letter-spacing:.14em;text-transform:uppercase;
+    margin-bottom:1.4rem;display:flex;align-items:center;gap:.7rem;
+  }
+  .hero-tag::before{content:'';width:30px;height:1px;background:var(--accent)}
+  .hero h1{
+    font-family:'DM Serif Display',serif;
+    font-size:clamp(2.7rem,6.2vw,5rem);
+    line-height:1.07;margin-bottom:1.4rem;color:var(--text);
+  }
+  .hero h1 em{font-style:italic;color:var(--accent)}
+  .hero-desc{font-size:1rem;color:var(--muted);max-width:490px;margin-bottom:2.4rem;line-height:1.85}
+  .hero-cta{display:flex;gap:.9rem;flex-wrap:wrap}
+
+  .btn{
+    display:inline-flex;align-items:center;gap:.5rem;
+    padding:.8rem 1.7rem;border-radius:4px;
+    font-size:.875rem;font-weight:500;text-decoration:none;
+    transition:all .2s;letter-spacing:.03em;
+    cursor:pointer;border:none;font-family:'DM Sans',sans-serif;
+  }
+  .btn-primary{background:var(--accent);color:var(--bg)}
+  .btn-primary:hover{filter:brightness(1.1);transform:translateY(-1px)}
+  .btn-ghost{background:transparent;color:var(--text);border:1px solid var(--border)}
+  .btn-ghost:hover{border-color:var(--accent);color:var(--accent)}
+
+  .hero-stats{
+    position:absolute;right:3rem;top:50%;transform:translateY(-50%);
+    display:flex;flex-direction:column;gap:2rem;
+  }
+  .stat{text-align:right}
+  .stat-num{font-family:'DM Serif Display',serif;font-size:2.5rem;color:var(--text);display:block;line-height:1}
+  .stat-label{font-family:'DM Mono',monospace;font-size:.68rem;color:var(--muted);letter-spacing:.1em;text-transform:uppercase}
+
+  /* ── SECTIONS ────────────────────────────────────── */
+  section{position:relative;z-index:1;padding:5.5rem 3rem}
+  .section-label{
+    font-family:'DM Mono',monospace;font-size:.71rem;
+    color:var(--accent);letter-spacing:.15em;text-transform:uppercase;
+    margin-bottom:.55rem;display:flex;align-items:center;gap:.65rem;
+  }
+  .section-label::before{content:'';width:20px;height:1px;background:var(--accent)}
+  .section-title{
+    font-family:'DM Serif Display',serif;
+    font-size:clamp(1.8rem,3.6vw,2.7rem);
+    margin-bottom:2.6rem;line-height:1.1;
+  }
+
+  /* ── STACK ───────────────────────────────────────── */
+  .stack-section{background:var(--surface);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+  .stack-grid{
+    display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));
+    gap:1px;background:var(--border);border:1px solid var(--border);
+  }
+  .stack-item{background:var(--surface);padding:1.35rem;transition:background .2s}
+  .stack-item:hover{background:var(--surf2)}
+  .stack-icon{font-size:1.35rem;margin-bottom:.55rem;display:block}
+  .stack-name{font-weight:500;font-size:.9rem;margin-bottom:.22rem}
+  .stack-detail{font-family:'DM Mono',monospace;font-size:.68rem;color:var(--muted)}
+
+  /* ── EXPERIENCE ──────────────────────────────────── */
+  .exp-item{
+    display:grid;grid-template-columns:185px 1fr;
+    gap:2rem;padding:2.4rem 0;border-bottom:1px solid var(--border);
+  }
+  .exp-item:first-child{border-top:1px solid var(--border)}
+  .exp-period{font-family:'DM Mono',monospace;font-size:.74rem;color:var(--muted);margin-bottom:.35rem;display:block}
+  .exp-company{font-size:.83rem;color:var(--accent);font-weight:500}
+  .exp-role{font-family:'DM Serif Display',serif;font-size:1.2rem;margin-bottom:.9rem}
+  .exp-points{list-style:none;display:flex;flex-direction:column;gap:.4rem}
+  .exp-points li{font-size:.87rem;color:var(--muted);padding-left:1.15rem;position:relative}
+  .exp-points li::before{content:'→';position:absolute;left:0;color:var(--accent);font-size:.7rem;top:.15em}
+
+  /* ── PORTFOLIO ───────────────────────────────────── */
+  .portfolio-section{background:var(--surface);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+  .portfolio-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(310px,1fr));gap:1.3rem}
+  .portfolio-card{
+    background:var(--bg);border:1px solid var(--border);
+    border-radius:6px;overflow:hidden;
+    transition:border-color .2s,transform .2s;
+    text-decoration:none;color:inherit;display:block;
+  }
+  .portfolio-card:hover{border-color:var(--accent);transform:translateY(-3px)}
+  .portfolio-card.dim{opacity:.55;cursor:default}
+  .portfolio-card.dim:hover{transform:none;border-color:var(--border)}
+
+  .card-preview{
+    height:155px;display:flex;align-items:center;justify-content:center;
+    border-bottom:1px solid var(--border);position:relative;overflow:hidden;
+  }
+  .preview-bi{background:linear-gradient(135deg,#1a1f3a,#0f1429)}
+  [data-theme="navy"] .preview-bi{background:linear-gradient(135deg,#0d1f3f,#071429)}
+
+  .mini-bars{display:flex;align-items:flex-end;gap:5px;height:68px;z-index:1;position:relative}
+  .mini-bar{width:15px;border-radius:2px 2px 0 0;background:var(--accent2);opacity:.75;animation:bp 2.2s ease-in-out infinite alternate}
+  .mini-bar:nth-child(1){height:38%;animation-delay:0s}
+  .mini-bar:nth-child(2){height:72%;animation-delay:.1s;background:var(--accent)}
+  .mini-bar:nth-child(3){height:52%;animation-delay:.2s}
+  .mini-bar:nth-child(4){height:90%;animation-delay:.3s;background:var(--accent)}
+  .mini-bar:nth-child(5){height:62%;animation-delay:.4s}
+  .mini-bar:nth-child(6){height:78%;animation-delay:.5s;background:var(--green)}
+  .mini-bar:nth-child(7){height:44%;animation-delay:.6s}
+  @keyframes bp{from{opacity:.5}to{opacity:1}}
+
+  .card-body{padding:1.35rem}
+  .card-tag{font-family:'DM Mono',monospace;font-size:.66rem;color:var(--accent);letter-spacing:.1em;text-transform:uppercase;margin-bottom:.4rem}
+  .card-title{font-family:'DM Serif Display',serif;font-size:1.08rem;margin-bottom:.4rem}
+  .card-desc{font-size:.83rem;color:var(--muted);line-height:1.65;margin-bottom:.85rem}
+  .card-link{font-family:'DM Mono',monospace;font-size:.71rem;color:var(--accent);display:flex;align-items:center;gap:.3rem}
+  .card-link::after{content:'→'}
+  .card-link.muted{color:var(--muted)}
+  .card-link.muted::after{content:''}
+
+  /* ── SERVICES ────────────────────────────────────── */
+  .services-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:1.3rem}
+  .service-card{background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:1.65rem;transition:border-color .2s}
+  .service-card:hover{border-color:var(--accent2)}
+  .service-num{font-family:'DM Serif Display',serif;font-size:1.85rem;color:var(--border);display:block;margin-bottom:.85rem;transition:color .4s}
+  .service-title{font-weight:500;margin-bottom:.42rem;font-size:.93rem}
+  .service-desc{font-size:.84rem;color:var(--muted);line-height:1.7}
+
+  /* ── CONTACT ─────────────────────────────────────── */
+  .contact-section{background:var(--surface);border-top:1px solid var(--border)}
+  .contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:start}
+  .contact-intro{font-size:1rem;color:var(--muted);line-height:1.85;margin-bottom:1.8rem}
+  .avail-badge{
+    display:inline-flex;align-items:center;gap:.5rem;
+    padding:.42rem 1rem;
+    background:rgba(74,222,128,.08);border:1px solid rgba(74,222,128,.22);
+    border-radius:100px;font-family:'DM Mono',monospace;
+    font-size:.71rem;color:var(--green);margin-bottom:1.7rem;
+  }
+  .avail-dot{width:6px;height:6px;background:var(--green);border-radius:50%;animation:blink 1.5s ease-in-out infinite}
+  @keyframes blink{0%,100%{opacity:1}50%{opacity:.25}}
+
+  .contact-links{display:flex;flex-direction:column;gap:.65rem}
+  .contact-link{
+    display:flex;align-items:center;gap:1rem;
+    padding:.95rem 1.15rem;background:var(--surf2);
+    border:1px solid var(--border);border-radius:4px;
+    text-decoration:none;color:var(--text);
+    font-size:.87rem;transition:border-color .2s,background .2s;
+  }
+  .contact-link:hover{border-color:var(--accent);background:rgba(0,0,0,.12)}
+  .contact-link-icon{
+    width:32px;height:32px;background:var(--border);
+    border-radius:4px;display:flex;align-items:center;
+    justify-content:center;font-size:.95rem;flex-shrink:0;
+  }
+  .cl-label{font-family:'DM Mono',monospace;font-size:.66rem;color:var(--muted);display:block;margin-bottom:.1rem;text-transform:uppercase;letter-spacing:.08em}
+
+  /* ── FOOTER ──────────────────────────────────────── */
+  footer{
+    position:relative;z-index:1;text-align:center;
+    padding:1.7rem 3rem;border-top:1px solid var(--border);
+    font-family:'DM Mono',monospace;font-size:.7rem;color:var(--muted);
+  }
+
+  /* ── REVEAL ──────────────────────────────────────── */
+  .reveal{opacity:0;transform:translateY(16px);transition:opacity .6s ease,transform .6s ease}
+  .reveal.visible{opacity:1;transform:none}
+
+  /* ── MOBILE ──────────────────────────────────────── */
+  @media(max-width:820px){
+    nav{padding:1rem 1.25rem}
+    .nav-links{display:none}
+    section{padding:4rem 1.4rem}
+    .hero{padding:1.4rem;padding-top:6.5rem;min-height:auto}
+    .hero-stats{display:none}
+    .exp-item{grid-template-columns:1fr;gap:.5rem}
+    .contact-grid{grid-template-columns:1fr;gap:2rem}
+    .portfolio-grid{grid-template-columns:1fr}
   }
 </style>
 </head>
@@ -648,129 +283,85 @@
 <nav>
   <a class="nav-logo" href="#">MI_PORTFOLIO</a>
   <ul class="nav-links">
-    <li><a href="#stack">Стек</a></li>
-    <li><a href="#experience">Опыт</a></li>
-    <li><a href="#portfolio">Работы</a></li>
-    <li><a href="#services">Услуги</a></li>
-    <li><a href="#contact">Контакты</a></li>
+    <li><a href="#stack"      data-i18n="nav.stack">Стек</a></li>
+    <li><a href="#experience" data-i18n="nav.exp">Опыт</a></li>
+    <li><a href="#portfolio"  data-i18n="nav.portfolio">Работы</a></li>
+    <li><a href="#services"   data-i18n="nav.services">Услуги</a></li>
+    <li><a href="#contact"    data-i18n="nav.contact">Контакты</a></li>
   </ul>
+  <div class="nav-controls">
+    <div class="lang-toggle">
+      <button class="lang-btn active" id="btn-ru" onclick="setLang('ru')">RU</button>
+      <button class="lang-btn"        id="btn-en" onclick="setLang('en')">EN</button>
+    </div>
+    <div class="theme-wrap">
+      <span class="theme-label" id="theme-label">Dark</span>
+      <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()" title="Switch theme"></button>
+    </div>
+  </div>
 </nav>
 
 <!-- HERO -->
 <section class="hero" id="hero">
   <div class="hero-inner">
-    <div class="hero-tag">Senior BI Developer & Data Analytics Lead</div>
-    <h1>Данные,<br>которые <em>говорят</em><br>за себя.</h1>
-    <p class="hero-desc">
-      Превращаю сырые данные в решения, которые бизнес понимает и использует.
-      Power BI, SQL, 1С — архитектура, дашборды, ETL и управление командой.
-    </p>
+    <div class="hero-tag" data-i18n="hero.tag">Senior BI Developer &amp; Data Analytics Lead</div>
+    <h1 data-i18n-html="hero.title">Данные,<br>которые <em>говорят</em><br>за себя.</h1>
+    <p class="hero-desc" data-i18n="hero.desc">Превращаю сырые данные в решения, которые бизнес понимает и использует. Power BI, SQL, 1С — архитектура, дашборды, ETL и управление командой.</p>
     <div class="hero-cta">
-      <a class="btn btn-primary" href="#contact">Написать мне</a>
-      <a class="btn btn-ghost" href="#portfolio">Смотреть работы</a>
+      <a class="btn btn-primary" href="#contact" data-i18n="hero.cta1">Написать мне</a>
+      <a class="btn btn-ghost"   href="#portfolio" data-i18n="hero.cta2">Смотреть работы</a>
     </div>
   </div>
-
   <div class="hero-stats">
-    <div class="stat">
-      <span class="stat-num">5+</span>
-      <span class="stat-label">лет в BI</span>
-    </div>
-    <div class="stat">
-      <span class="stat-num">2+</span>
-      <span class="stat-label">года Team Lead</span>
-    </div>
-    <div class="stat">
-      <span class="stat-num">4</span>
-      <span class="stat-label">сотрудников в команде</span>
-    </div>
+    <div class="stat"><span class="stat-num">5+</span><span class="stat-label" data-i18n="hero.stat1">лет в BI</span></div>
+    <div class="stat"><span class="stat-num">2+</span><span class="stat-label" data-i18n="hero.stat2">года Team Lead</span></div>
+    <div class="stat"><span class="stat-num">4</span><span class="stat-label"  data-i18n="hero.stat3">в команде</span></div>
   </div>
 </section>
 
 <!-- STACK -->
 <section class="stack-section" id="stack">
-  <div class="section-label">Технологии</div>
-  <div class="section-title">Технический стек</div>
-
+  <div class="section-label" data-i18n="stack.label">Технологии</div>
+  <div class="section-title" data-i18n="stack.title">Технический стек</div>
   <div class="stack-grid reveal">
-    <div class="stack-item">
-      <span class="stack-icon">📊</span>
-      <div class="stack-name">Power BI</div>
-      <div class="stack-detail">Desktop · Service · Report Server</div>
-    </div>
-    <div class="stack-item">
-      <span class="stack-icon">🔢</span>
-      <div class="stack-name">DAX</div>
-      <div class="stack-detail">Сложные меры · DAX Studio · Tabular Editor</div>
-    </div>
-    <div class="stack-item">
-      <span class="stack-icon">⚡</span>
-      <div class="stack-name">Power Query (M)</div>
-      <div class="stack-detail">ETL · Трансформации · Загрузки</div>
-    </div>
-    <div class="stack-item">
-      <span class="stack-icon">🗄️</span>
-      <div class="stack-name">SQL</div>
-      <div class="stack-detail">MS SQL · MySQL · PostgreSQL</div>
-    </div>
-    <div class="stack-item">
-      <span class="stack-icon">🐍</span>
-      <div class="stack-name">Python</div>
-      <div class="stack-detail">Pandas · NumPy · Matplotlib</div>
-    </div>
-    <div class="stack-item">
-      <span class="stack-icon">🔗</span>
-      <div class="stack-name">1С</div>
-      <div class="stack-detail">Интеграция · Обмены данных · API</div>
-    </div>
-    <div class="stack-item">
-      <span class="stack-icon">🔄</span>
-      <div class="stack-name">ETL / Интеграции</div>
-      <div class="stack-detail">REST API · Git · Расписания обновлений</div>
-    </div>
-    <div class="stack-item">
-      <span class="stack-icon">🏗️</span>
-      <div class="stack-name">Архитектура данных</div>
-      <div class="stack-detail">Витрины · Реляционные модели · DWH</div>
-    </div>
+    <div class="stack-item"><span class="stack-icon">📊</span><div class="stack-name">Power BI</div><div class="stack-detail">Desktop · Service · Report Server</div></div>
+    <div class="stack-item"><span class="stack-icon">🔢</span><div class="stack-name">DAX</div><div class="stack-detail">DAX Studio · Tabular Editor</div></div>
+    <div class="stack-item"><span class="stack-icon">⚡</span><div class="stack-name">Power Query (M)</div><div class="stack-detail" data-i18n="stack.pq">ETL · Трансформации · Загрузки</div></div>
+    <div class="stack-item"><span class="stack-icon">🗄️</span><div class="stack-name">SQL</div><div class="stack-detail">MS SQL · MySQL · PostgreSQL</div></div>
+    <div class="stack-item"><span class="stack-icon">🐍</span><div class="stack-name">Python</div><div class="stack-detail">Pandas · NumPy · Matplotlib</div></div>
+    <div class="stack-item"><span class="stack-icon">🔗</span><div class="stack-name">1С</div><div class="stack-detail" data-i18n="stack.1c">Интеграция · Обмены данных · API</div></div>
+    <div class="stack-item"><span class="stack-icon">🔄</span><div class="stack-name" data-i18n="stack.etl">ETL / Интеграции</div><div class="stack-detail">REST API · Git</div></div>
+    <div class="stack-item"><span class="stack-icon">🏗️</span><div class="stack-name" data-i18n="stack.arch">Архитектура данных</div><div class="stack-detail" data-i18n="stack.arch2">Витрины · Реляционные модели · DWH</div></div>
   </div>
 </section>
 
 <!-- EXPERIENCE -->
 <section id="experience">
-  <div class="section-label">Карьера</div>
-  <div class="section-title">Опыт работы</div>
-
-  <div class="exp-list">
+  <div class="section-label" data-i18n="exp.label">Карьера</div>
+  <div class="section-title" data-i18n="exp.title">Опыт работы</div>
+  <div>
     <div class="exp-item reveal">
-      <div class="exp-meta">
-        <span class="exp-period">Янв 2023 — н.в.</span>
-        <span class="exp-company">ТОО «Компания Эврика»</span>
-      </div>
-      <div class="exp-body">
-        <div class="exp-role">Руководитель отдела аналитики<br>и управления данными</div>
+      <div><span class="exp-period" data-i18n="exp.p1.period">Янв 2023 — н.в.</span><span class="exp-company">ТОО «Компания Эврика»</span></div>
+      <div>
+        <div class="exp-role" data-i18n-html="exp.p1.role">Руководитель отдела аналитики<br>и управления данными</div>
         <ul class="exp-points">
-          <li>Управление командой 4 специалистов: распределение задач, код-ревью, наставничество</li>
-          <li>Проектирование архитектуры хранения и обработки данных (витрины, модели)</li>
-          <li>Настройка интеграций между 1С, внешними API и БД, реализация ETL-процессов</li>
-          <li>Ведение переговоров с заказчиками, постановка ТЗ, контроль разработки витрин</li>
-          <li>Внедрил стандарты моделирования Power BI и процедуру code-review для DAX/SQL</li>
+          <li data-i18n="exp.p1.b1">Управление командой 4 специалистов: распределение задач, код-ревью, наставничество</li>
+          <li data-i18n="exp.p1.b2">Проектирование архитектуры хранения и обработки данных (витрины, модели)</li>
+          <li data-i18n="exp.p1.b3">Настройка интеграций между 1С, внешними API и БД, реализация ETL-процессов</li>
+          <li data-i18n="exp.p1.b4">Ведение переговоров с заказчиками, постановка ТЗ, контроль разработки витрин</li>
+          <li data-i18n="exp.p1.b5">Внедрил стандарты моделирования Power BI и процедуру code-review для DAX/SQL</li>
         </ul>
       </div>
     </div>
-
     <div class="exp-item reveal">
-      <div class="exp-meta">
-        <span class="exp-period">Сен 2020 — Янв 2023</span>
-        <span class="exp-company">ТОО «Компания Эврика»</span>
-      </div>
-      <div class="exp-body">
-        <div class="exp-role">BI Developer</div>
+      <div><span class="exp-period" data-i18n="exp.p2.period">Сен 2020 — Янв 2023</span><span class="exp-company">ТОО «Компания Эврика»</span></div>
+      <div>
+        <div class="exp-role" data-i18n="exp.p2.role">BI Developer</div>
         <ul class="exp-points">
-          <li>Разработка интерактивных дашбордов в Power BI: KPI, продажи, трафик с фокусом на UX/UI</li>
-          <li>Создание отчётов и витрин данных, интеграция источников</li>
-          <li>Работа с бизнес-требованиями, поддержка пользователей, сопровождение релизов</li>
-          <li>Подготовка документации и инструкций по использованию отчётов</li>
+          <li data-i18n="exp.p2.b1">Разработка интерактивных дашбордов в Power BI: KPI, продажи, трафик — акцент на UX/UI</li>
+          <li data-i18n="exp.p2.b2">Создание отчётов и витрин данных, интеграция источников</li>
+          <li data-i18n="exp.p2.b3">Работа с бизнес-требованиями, поддержка пользователей, сопровождение релизов</li>
+          <li data-i18n="exp.p2.b4">Подготовка документации и инструкций по использованию отчётов</li>
         </ul>
       </div>
     </div>
@@ -778,152 +369,231 @@
 </section>
 
 <!-- PORTFOLIO -->
-<section id="portfolio" style="background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);">
-  <div class="section-label">Работы</div>
-  <div class="section-title">Портфолио проектов</div>
-
+<section class="portfolio-section" id="portfolio">
+  <div class="section-label" data-i18n="port.label">Работы</div>
+  <div class="section-title" data-i18n="port.title">Портфолио проектов</div>
   <div class="portfolio-grid">
-
     <a class="portfolio-card" href="https://app.powerbi.com/view?r=eyJrIjoiMzNhMDA3MjAtYmRhZi00MzVlLWIwM2MtNDQzODU1MDI3NWFhIiwidCI6ImViMGYyYmJhLWE1MzAtNDQ4Yi05ZmFhLWQ1ZjhlNzc2OWNiMSIsImMiOjl9" target="_blank" rel="noopener">
-      <div class="card-preview card-preview-bi">
+      <div class="card-preview preview-bi">
         <div class="mini-bars">
-          <div class="mini-bar"></div>
-          <div class="mini-bar"></div>
-          <div class="mini-bar"></div>
-          <div class="mini-bar"></div>
-          <div class="mini-bar"></div>
-          <div class="mini-bar"></div>
-          <div class="mini-bar"></div>
+          <div class="mini-bar"></div><div class="mini-bar"></div><div class="mini-bar"></div>
+          <div class="mini-bar"></div><div class="mini-bar"></div><div class="mini-bar"></div><div class="mini-bar"></div>
         </div>
       </div>
       <div class="card-body">
         <div class="card-tag">Power BI · DAX · SQL</div>
-        <div class="card-title">Аналитический дашборд</div>
-        <p class="card-desc">Интерактивный публичный отчёт с визуализацией ключевых бизнес-метрик. Построен с упором на UX и читаемость данных.</p>
-        <span class="card-link">Открыть отчёт</span>
+        <div class="card-title" data-i18n="port.c1.title">Аналитический дашборд</div>
+        <p class="card-desc" data-i18n="port.c1.desc">Интерактивный публичный отчёт с визуализацией ключевых бизнес-метрик. Построен с упором на UX и читаемость данных.</p>
+        <span class="card-link" data-i18n="port.c1.link">Открыть отчёт</span>
       </div>
     </a>
-
-    <div class="portfolio-card" style="cursor: default; opacity: 0.6;">
-      <div class="card-preview" style="background: linear-gradient(135deg, #1a2a1a 0%, #0f1a0f 100%);">
-        <span style="font-size: 2.5rem;">🔄</span>
-      </div>
+    <div class="portfolio-card dim">
+      <div class="card-preview" style="background:linear-gradient(135deg,#1a2a1a,#0f1a0f)"><span style="font-size:2rem">🔄</span></div>
       <div class="card-body">
         <div class="card-tag">ETL · 1С · REST API</div>
-        <div class="card-title">Система интеграции данных</div>
-        <p class="card-desc">Архитектура обмена данными между 1С, внешними API и хранилищем данных. Автоматизированные расписания обновлений.</p>
-        <span class="card-link" style="color: var(--muted);">Скоро</span>
+        <div class="card-title" data-i18n="port.c2.title">Система интеграции данных</div>
+        <p class="card-desc" data-i18n="port.c2.desc">Архитектура обмена данными между 1С, внешними API и хранилищем. Автоматизированные расписания обновлений.</p>
+        <span class="card-link muted" data-i18n="port.soon">Скоро</span>
       </div>
     </div>
-
-    <div class="portfolio-card" style="cursor: default; opacity: 0.6;">
-      <div class="card-preview" style="background: linear-gradient(135deg, #2a1a1a 0%, #1a0f0f 100%);">
-        <span style="font-size: 2.5rem;">🏪</span>
-      </div>
+    <div class="portfolio-card dim">
+      <div class="card-preview" style="background:linear-gradient(135deg,#2a1a1a,#1a0f0f)"><span style="font-size:2rem">🏪</span></div>
       <div class="card-body">
         <div class="card-tag">Python · SQL · BI</div>
-        <div class="card-title">Система распределения товаров</div>
-        <p class="card-desc">Алгоритм распределения товаров по магазинам на основе спроса. Cross-team проект с Web и 1С отделами.</p>
-        <span class="card-link" style="color: var(--muted);">Скоро</span>
+        <div class="card-title" data-i18n="port.c3.title">Система распределения товаров</div>
+        <p class="card-desc" data-i18n="port.c3.desc">Алгоритм распределения товаров по магазинам на основе спроса. Cross-team проект: Web + 1С + BI.</p>
+        <span class="card-link muted" data-i18n="port.soon">Скоро</span>
       </div>
     </div>
-
   </div>
 </section>
 
 <!-- SERVICES -->
 <section id="services">
-  <div class="section-label">Фриланс</div>
-  <div class="section-title">Что я делаю на заказ</div>
-
+  <div class="section-label" data-i18n="srv.label">Фриланс</div>
+  <div class="section-title" data-i18n="srv.title">Что я делаю на заказ</div>
   <div class="services-grid">
-    <div class="service-card reveal">
-      <span class="service-num">01</span>
-      <div class="service-title">Power BI дашборды</div>
-      <p class="service-desc">Разработка интерактивных дашбордов с нуля или доработка существующих. DAX-меры, модели данных, публикация в Service.</p>
-    </div>
-    <div class="service-card reveal">
-      <span class="service-num">02</span>
-      <div class="service-title">ETL & интеграции</div>
-      <p class="service-desc">Настройка потоков данных между источниками: 1С, API, базы данных. Power Query, SQL-скрипты, расписания обновлений.</p>
-    </div>
-    <div class="service-card reveal">
-      <span class="service-num">03</span>
-      <div class="service-title">SQL-аналитика</div>
-      <p class="service-desc">Написание и оптимизация SQL-запросов. Построение витрин данных, агрегаций, ad-hoc аналитика. MS SQL, PostgreSQL, MySQL.</p>
-    </div>
-    <div class="service-card reveal">
-      <span class="service-num">04</span>
-      <div class="service-title">Аудит BI-решений</div>
-      <p class="service-desc">Разбор существующих отчётов и моделей данных. Оптимизация производительности, рефакторинг DAX, стандартизация.</p>
-    </div>
+    <div class="service-card reveal"><span class="service-num">01</span><div class="service-title" data-i18n="srv.s1.title">Power BI дашборды</div><p class="service-desc" data-i18n="srv.s1.desc">Разработка интерактивных дашбордов с нуля или доработка существующих. DAX-меры, модели данных, публикация в Service.</p></div>
+    <div class="service-card reveal"><span class="service-num">02</span><div class="service-title" data-i18n="srv.s2.title">ETL &amp; интеграции</div><p class="service-desc" data-i18n="srv.s2.desc">Настройка потоков данных между источниками: 1С, API, базы данных. Power Query, SQL-скрипты, расписания обновлений.</p></div>
+    <div class="service-card reveal"><span class="service-num">03</span><div class="service-title" data-i18n="srv.s3.title">SQL-аналитика</div><p class="service-desc" data-i18n="srv.s3.desc">Написание и оптимизация SQL-запросов. Построение витрин, агрегаций, ad-hoc аналитика. MS SQL, PostgreSQL, MySQL.</p></div>
+    <div class="service-card reveal"><span class="service-num">04</span><div class="service-title" data-i18n="srv.s4.title">Аудит BI-решений</div><p class="service-desc" data-i18n="srv.s4.desc">Разбор существующих отчётов и моделей данных. Оптимизация производительности, рефакторинг DAX, стандартизация.</p></div>
   </div>
 </section>
 
 <!-- CONTACT -->
 <section class="contact-section" id="contact">
-  <div class="section-label">Связь</div>
-  <div class="section-title">Начнём работать?</div>
-
+  <div class="section-label" data-i18n="cnt.label">Связь</div>
+  <div class="section-title" data-i18n="cnt.title">Начнём работать?</div>
   <div class="contact-grid">
     <div>
-      <div class="avail-badge">
-        <div class="avail-dot"></div>
-        Открыт к проектам
-      </div>
-      <p class="contact-intro">
-        Готов взяться за фриланс-проекты и рассмотреть интересные предложения о работе.
-        Пишите в Telegram — отвечаю быстро.
-      </p>
-      <p style="font-size: 0.85rem; color: var(--muted);">
-        Казахстан · Алматы<br>
-        Работаю удалённо с клиентами из СНГ и не только.
-      </p>
+      <div class="avail-badge"><div class="avail-dot"></div><span data-i18n="cnt.avail">Открыт к проектам</span></div>
+      <p class="contact-intro" data-i18n="cnt.intro">Готов взяться за фриланс-проекты и рассмотреть интересные предложения о работе. Пишите в Telegram — отвечаю быстро.</p>
+      <p style="font-size:.83rem;color:var(--muted)" data-i18n="cnt.location">Казахстан · Работаю удалённо с клиентами из СНГ и не только.</p>
     </div>
-
     <div class="contact-links">
-      <a class="contact-link" href="https://t.me/YOUR_TELEGRAM" target="_blank">
+      <a class="contact-link" href="https://t.me/IMax23" target="_blank">
         <div class="contact-link-icon">✈️</div>
-        <div class="contact-link-text">
-          <span class="contact-link-label">Telegram</span>
-          @IMax23
-        </div>
+        <div><span class="cl-label">Telegram</span>@IMax23</div>
       </a>
       <a class="contact-link" href="mailto:ivanihinmaxim@gmail.com">
         <div class="contact-link-icon">📧</div>
-        <div class="contact-link-text">
-          <span class="contact-link-label">Email</span>
-          ivanihinmaxim@gmail.com
-        </div>
+        <div><span class="cl-label">Email</span>ivanihinmaxim@gmail.com</div>
       </a>
       <a class="contact-link" href="https://www.linkedin.com/in/maxim-ivanikhin-320768192/" target="_blank">
         <div class="contact-link-icon">💼</div>
-        <div class="contact-link-text">
-          <span class="contact-link-label">LinkedIn</span>
-          Максим Иванихин
-        </div>
+        <div><span class="cl-label">LinkedIn</span>Maxim Ivanikhin</div>
       </a>
     </div>
   </div>
 </section>
 
 <footer>
-  <span>© 2025 Максим Иванихин</span>
-  &nbsp;·&nbsp;
-  <span>Разработано с ☕ и DAX</span>
+  <span>© 2025 Maxim Ivanikhin</span> &nbsp;·&nbsp;
+  <span data-i18n="footer.made">Разработано с ☕ и DAX</span>
 </footer>
 
 <script>
-  // Scroll reveal
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(e => {
-      if (e.isIntersecting) {
-        e.target.classList.add('visible');
-      }
-    });
-  }, { threshold: 0.1 });
+/* ════════════════════════════════════════════════════
+   TRANSLATIONS
+════════════════════════════════════════════════════ */
+const T = {
+  ru:{
+    "nav.stack":"Стек","nav.exp":"Опыт","nav.portfolio":"Работы","nav.services":"Услуги","nav.contact":"Контакты",
+    "hero.tag":"Senior BI Developer & Data Analytics Lead",
+    "hero.title":"Данные,<br>которые <em>говорят</em><br>за себя.",
+    "hero.desc":"Превращаю сырые данные в решения, которые бизнес понимает и использует. Power BI, SQL, 1С — архитектура, дашборды, ETL и управление командой.",
+    "hero.cta1":"Написать мне","hero.cta2":"Смотреть работы",
+    "hero.stat1":"лет в BI","hero.stat2":"года Team Lead","hero.stat3":"в команде",
+    "stack.label":"Технологии","stack.title":"Технический стек",
+    "stack.pq":"ETL · Трансформации · Загрузки","stack.1c":"Интеграция · Обмены данных · API",
+    "stack.etl":"ETL / Интеграции","stack.arch":"Архитектура данных","stack.arch2":"Витрины · Реляционные модели · DWH",
+    "exp.label":"Карьера","exp.title":"Опыт работы",
+    "exp.p1.period":"Янв 2023 — н.в.",
+    "exp.p1.role":"Руководитель отдела аналитики<br>и управления данными",
+    "exp.p1.b1":"Управление командой 4 специалистов: распределение задач, код-ревью, наставничество",
+    "exp.p1.b2":"Проектирование архитектуры хранения и обработки данных (витрины, модели)",
+    "exp.p1.b3":"Настройка интеграций между 1С, внешними API и БД, реализация ETL-процессов",
+    "exp.p1.b4":"Ведение переговоров с заказчиками, постановка ТЗ, контроль разработки витрин",
+    "exp.p1.b5":"Внедрил стандарты моделирования Power BI и процедуру code-review для DAX/SQL",
+    "exp.p2.period":"Сен 2020 — Янв 2023","exp.p2.role":"BI Developer",
+    "exp.p2.b1":"Разработка интерактивных дашбордов в Power BI: KPI, продажи, трафик — акцент на UX/UI",
+    "exp.p2.b2":"Создание отчётов и витрин данных, интеграция источников",
+    "exp.p2.b3":"Работа с бизнес-требованиями, поддержка пользователей, сопровождение релизов",
+    "exp.p2.b4":"Подготовка документации и инструкций по использованию отчётов",
+    "port.label":"Работы","port.title":"Портфолио проектов",
+    "port.c1.title":"Аналитический дашборд",
+    "port.c1.desc":"Интерактивный публичный отчёт с визуализацией ключевых бизнес-метрик. Построен с упором на UX и читаемость данных.",
+    "port.c1.link":"Открыть отчёт",
+    "port.c2.title":"Система интеграции данных",
+    "port.c2.desc":"Архитектура обмена данными между 1С, внешними API и хранилищем. Автоматизированные расписания обновлений.",
+    "port.c3.title":"Система распределения товаров",
+    "port.c3.desc":"Алгоритм распределения товаров по магазинам на основе спроса. Cross-team проект: Web + 1С + BI.",
+    "port.soon":"Скоро",
+    "srv.label":"Фриланс","srv.title":"Что я делаю на заказ",
+    "srv.s1.title":"Power BI дашборды","srv.s1.desc":"Разработка интерактивных дашбордов с нуля или доработка существующих. DAX-меры, модели данных, публикация в Service.",
+    "srv.s2.title":"ETL & интеграции","srv.s2.desc":"Настройка потоков данных между источниками: 1С, API, базы данных. Power Query, SQL-скрипты, расписания обновлений.",
+    "srv.s3.title":"SQL-аналитика","srv.s3.desc":"Написание и оптимизация SQL-запросов. Построение витрин, агрегаций, ad-hoc аналитика. MS SQL, PostgreSQL, MySQL.",
+    "srv.s4.title":"Аудит BI-решений","srv.s4.desc":"Разбор существующих отчётов и моделей данных. Оптимизация производительности, рефакторинг DAX, стандартизация.",
+    "cnt.label":"Связь","cnt.title":"Начнём работать?","cnt.avail":"Открыт к проектам",
+    "cnt.intro":"Готов взяться за фриланс-проекты и рассмотреть интересные предложения о работе. Пишите в Telegram — отвечаю быстро.",
+    "cnt.location":"Казахстан · Работаю удалённо с клиентами из СНГ и не только.",
+    "footer.made":"Разработано с ☕ и DAX",
+    "theme.dark":"Dark","theme.navy":"Navy"
+  },
+  en:{
+    "nav.stack":"Stack","nav.exp":"Experience","nav.portfolio":"Work","nav.services":"Services","nav.contact":"Contact",
+    "hero.tag":"Senior BI Developer & Data Analytics Lead",
+    "hero.title":"Data that <em>speaks</em><br>for itself.",
+    "hero.desc":"I turn raw data into decisions businesses actually understand and act on. Power BI, SQL, 1C — architecture, dashboards, ETL, and team leadership.",
+    "hero.cta1":"Get in touch","hero.cta2":"View my work",
+    "hero.stat1":"years in BI","hero.stat2":"years as Lead","hero.stat3":"team size",
+    "stack.label":"Technologies","stack.title":"Tech Stack",
+    "stack.pq":"ETL · Transformations · Loads","stack.1c":"Integration · Data Exchange · API",
+    "stack.etl":"ETL / Integrations","stack.arch":"Data Architecture","stack.arch2":"Data Marts · Relational Models · DWH",
+    "exp.label":"Career","exp.title":"Work Experience",
+    "exp.p1.period":"Jan 2023 — Present",
+    "exp.p1.role":"Head of Analytics<br>& Data Management",
+    "exp.p1.b1":"Led a team of 4 analysts: task delegation, code review, mentoring",
+    "exp.p1.b2":"Designed data storage and processing architecture — data marts and models",
+    "exp.p1.b3":"Built integrations between 1C, external APIs and databases; implemented ETL pipelines",
+    "exp.p1.b4":"Managed stakeholder negotiations, scoped requirements, oversaw data mart delivery",
+    "exp.p1.b5":"Introduced Power BI modelling standards and a DAX/SQL code-review process",
+    "exp.p2.period":"Sep 2020 — Jan 2023","exp.p2.role":"BI Developer",
+    "exp.p2.b1":"Built interactive Power BI dashboards — KPIs, sales, traffic — with a focus on UX/UI",
+    "exp.p2.b2":"Created reports and data marts, integrated diverse data sources",
+    "exp.p2.b3":"Gathered business requirements, supported end-users, managed releases",
+    "exp.p2.b4":"Authored documentation and end-user guides for reports",
+    "port.label":"Work","port.title":"Portfolio",
+    "port.c1.title":"Analytics Dashboard",
+    "port.c1.desc":"Interactive public report visualising key business metrics. Built with a focus on UX and data readability.",
+    "port.c1.link":"Open report",
+    "port.c2.title":"Data Integration System",
+    "port.c2.desc":"Data exchange architecture between 1C, external APIs and the warehouse. Automated refresh schedules.",
+    "port.c3.title":"Product Distribution System",
+    "port.c3.desc":"Demand-driven product allocation algorithm across retail locations. Cross-team: Web + 1C + BI.",
+    "port.soon":"Coming soon",
+    "srv.label":"Freelance","srv.title":"What I build for clients",
+    "srv.s1.title":"Power BI Dashboards","srv.s1.desc":"End-to-end dashboard development or enhancement of existing reports. DAX measures, data modelling, publishing to Power BI Service.",
+    "srv.s2.title":"ETL & Integrations","srv.s2.desc":"Data pipeline setup between sources: 1C, APIs, databases. Power Query, SQL scripts, scheduled refreshes.",
+    "srv.s3.title":"SQL Analytics","srv.s3.desc":"Writing and optimising SQL queries. Building data marts, aggregations, ad-hoc analysis. MS SQL, PostgreSQL, MySQL.",
+    "srv.s4.title":"BI Solution Audit","srv.s4.desc":"Review of existing reports and data models. Performance optimisation, DAX refactoring, best-practice standardisation.",
+    "cnt.label":"Contact","cnt.title":"Let's work together.","cnt.avail":"Open to projects",
+    "cnt.intro":"Available for freelance projects and open to interesting full-time opportunities. Drop me a message on Telegram — I reply fast.",
+    "cnt.location":"Kazakhstan · Remote-friendly, working with clients across CIS and beyond.",
+    "footer.made":"Built with ☕ and DAX",
+    "theme.dark":"Dark","theme.navy":"Navy"
+  }
+};
 
-  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+/* ════════════════════════════════════════════════════
+   LANGUAGE
+════════════════════════════════════════════════════ */
+let lang = 'ru';
+
+function setLang(l) {
+  lang = l;
+  document.documentElement.lang = l;
+  document.getElementById('btn-ru').classList.toggle('active', l==='ru');
+  document.getElementById('btn-en').classList.toggle('active', l==='en');
+  const t = T[l];
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const k = el.getAttribute('data-i18n');
+    if (t[k]!==undefined) el.textContent = t[k];
+  });
+  document.querySelectorAll('[data-i18n-html]').forEach(el => {
+    const k = el.getAttribute('data-i18n-html');
+    if (t[k]!==undefined) el.innerHTML = t[k];
+  });
+  updateThemeLabel();
+}
+
+/* ════════════════════════════════════════════════════
+   THEME
+════════════════════════════════════════════════════ */
+let theme = 'dark';
+
+function toggleTheme() {
+  theme = theme === 'dark' ? 'navy' : 'dark';
+  document.body.setAttribute('data-theme', theme === 'navy' ? 'navy' : '');
+  updateThemeLabel();
+}
+
+function updateThemeLabel() {
+  document.getElementById('theme-label').textContent =
+    theme === 'dark' ? T[lang]['theme.dark'] : T[lang]['theme.navy'];
+}
+
+/* ════════════════════════════════════════════════════
+   SCROLL REVEAL
+════════════════════════════════════════════════════ */
+const obs = new IntersectionObserver(entries =>
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }),
+  { threshold: 0.1 }
+);
+document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+// Init label
+updateThemeLabel();
 </script>
 </body>
 </html>
