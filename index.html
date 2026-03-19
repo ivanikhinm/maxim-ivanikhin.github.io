@@ -1,0 +1,929 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Максим Иванихин — BI Developer & Data Analytics Lead</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0d0d0f;
+    --surface: #141417;
+    --surface2: #1c1c21;
+    --border: #2a2a32;
+    --accent: #e8c97a;
+    --accent2: #6a7cff;
+    --text: #e8e8ec;
+    --muted: #7a7a8c;
+    --green: #4ade80;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* GRID BACKGROUND */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(232,201,122,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(232,201,122,0.03) 1px, transparent 1px);
+    background-size: 60px 60px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.2rem 3rem;
+    background: rgba(13,13,15,0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .nav-logo {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.85rem;
+    color: var(--accent);
+    letter-spacing: 0.1em;
+    text-decoration: none;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 2rem;
+    list-style: none;
+  }
+
+  .nav-links a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 0.85rem;
+    letter-spacing: 0.05em;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--text); }
+
+  /* HERO */
+  .hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    padding: 0 3rem;
+    z-index: 1;
+  }
+
+  .hero-inner {
+    max-width: 900px;
+  }
+
+  .hero-tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.78rem;
+    color: var(--accent);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .hero-tag::before {
+    content: '';
+    width: 32px;
+    height: 1px;
+    background: var(--accent);
+  }
+
+  .hero h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(3rem, 7vw, 5.5rem);
+    line-height: 1.05;
+    margin-bottom: 1.5rem;
+    color: var(--text);
+  }
+
+  .hero h1 em {
+    font-style: italic;
+    color: var(--accent);
+  }
+
+  .hero-desc {
+    font-size: 1.1rem;
+    color: var(--muted);
+    max-width: 520px;
+    margin-bottom: 2.5rem;
+    line-height: 1.8;
+  }
+
+  .hero-cta {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.85rem 1.8rem;
+    border-radius: 4px;
+    font-size: 0.875rem;
+    font-weight: 500;
+    text-decoration: none;
+    transition: all 0.2s;
+    letter-spacing: 0.03em;
+    cursor: pointer;
+    border: none;
+  }
+
+  .btn-primary {
+    background: var(--accent);
+    color: #0d0d0f;
+  }
+
+  .btn-primary:hover {
+    background: #f0d98a;
+    transform: translateY(-1px);
+  }
+
+  .btn-ghost {
+    background: transparent;
+    color: var(--text);
+    border: 1px solid var(--border);
+  }
+
+  .btn-ghost:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  .hero-stats {
+    position: absolute;
+    right: 3rem;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .stat {
+    text-align: right;
+  }
+
+  .stat-num {
+    font-family: 'DM Serif Display', serif;
+    font-size: 2.5rem;
+    color: var(--text);
+    display: block;
+  }
+
+  .stat-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--muted);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  /* SECTIONS */
+  section {
+    position: relative;
+    z-index: 1;
+    padding: 6rem 3rem;
+  }
+
+  .section-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--accent);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 0.75rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .section-label::before {
+    content: '';
+    width: 24px;
+    height: 1px;
+    background: var(--accent);
+  }
+
+  .section-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(2rem, 4vw, 3rem);
+    margin-bottom: 3rem;
+    line-height: 1.1;
+  }
+
+  /* STACK */
+  .stack-section {
+    background: var(--surface);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .stack-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    margin-top: 2rem;
+  }
+
+  .stack-item {
+    background: var(--surface);
+    padding: 1.5rem;
+    transition: background 0.2s;
+  }
+
+  .stack-item:hover { background: var(--surface2); }
+
+  .stack-icon {
+    font-size: 1.5rem;
+    margin-bottom: 0.75rem;
+    display: block;
+  }
+
+  .stack-name {
+    font-weight: 500;
+    font-size: 0.95rem;
+    margin-bottom: 0.3rem;
+  }
+
+  .stack-detail {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--muted);
+  }
+
+  /* EXPERIENCE */
+  .exp-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .exp-item {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 2rem;
+    padding: 2.5rem 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .exp-item:first-child { border-top: 1px solid var(--border); }
+
+  .exp-meta {
+    padding-top: 0.25rem;
+  }
+
+  .exp-period {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.78rem;
+    color: var(--muted);
+    margin-bottom: 0.5rem;
+    display: block;
+  }
+
+  .exp-company {
+    font-size: 0.875rem;
+    color: var(--accent);
+    font-weight: 500;
+  }
+
+  .exp-role {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.3rem;
+    margin-bottom: 1rem;
+  }
+
+  .exp-points {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .exp-points li {
+    font-size: 0.9rem;
+    color: var(--muted);
+    padding-left: 1.2rem;
+    position: relative;
+  }
+
+  .exp-points li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--accent);
+    font-size: 0.75rem;
+    top: 0.1em;
+  }
+
+  /* PORTFOLIO */
+  .portfolio-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .portfolio-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    overflow: hidden;
+    transition: border-color 0.2s, transform 0.2s;
+    text-decoration: none;
+    color: inherit;
+    display: block;
+  }
+
+  .portfolio-card:hover {
+    border-color: var(--accent);
+    transform: translateY(-3px);
+  }
+
+  .card-preview {
+    height: 180px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 3rem;
+    border-bottom: 1px solid var(--border);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .card-preview-bi {
+    background: linear-gradient(135deg, #1a1f3a 0%, #0f1429 100%);
+  }
+
+  .card-preview-bi::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent 30px,
+      rgba(106,124,255,0.05) 30px,
+      rgba(106,124,255,0.05) 31px
+    );
+  }
+
+  /* Mini chart bars */
+  .mini-bars {
+    display: flex;
+    align-items: flex-end;
+    gap: 6px;
+    height: 80px;
+    z-index: 1;
+    position: relative;
+  }
+
+  .mini-bar {
+    width: 18px;
+    border-radius: 2px 2px 0 0;
+    background: var(--accent2);
+    opacity: 0.8;
+    animation: barPulse 2s ease-in-out infinite alternate;
+  }
+
+  .mini-bar:nth-child(1) { height: 40%; animation-delay: 0s; }
+  .mini-bar:nth-child(2) { height: 70%; animation-delay: 0.1s; background: var(--accent); }
+  .mini-bar:nth-child(3) { height: 55%; animation-delay: 0.2s; }
+  .mini-bar:nth-child(4) { height: 90%; animation-delay: 0.3s; background: var(--accent); }
+  .mini-bar:nth-child(5) { height: 65%; animation-delay: 0.4s; }
+  .mini-bar:nth-child(6) { height: 80%; animation-delay: 0.5s; background: var(--green); }
+  .mini-bar:nth-child(7) { height: 45%; animation-delay: 0.6s; }
+
+  @keyframes barPulse {
+    from { opacity: 0.6; }
+    to { opacity: 1; }
+  }
+
+  .card-body {
+    padding: 1.5rem;
+  }
+
+  .card-tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--accent);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+  }
+
+  .card-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.15rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .card-desc {
+    font-size: 0.85rem;
+    color: var(--muted);
+    line-height: 1.6;
+    margin-bottom: 1rem;
+  }
+
+  .card-link {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--accent);
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+
+  .card-link::after {
+    content: '→';
+  }
+
+  /* CONTACT */
+  .contact-section {
+    background: var(--surface);
+    border-top: 1px solid var(--border);
+  }
+
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: start;
+  }
+
+  .contact-intro {
+    font-size: 1.05rem;
+    color: var(--muted);
+    line-height: 1.8;
+    margin-bottom: 2rem;
+  }
+
+  .contact-links {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .contact-link {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem 1.25rem;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    text-decoration: none;
+    color: var(--text);
+    font-size: 0.9rem;
+    transition: border-color 0.2s, background 0.2s;
+  }
+
+  .contact-link:hover {
+    border-color: var(--accent);
+    background: rgba(232,201,122,0.05);
+  }
+
+  .contact-link-icon {
+    width: 32px;
+    height: 32px;
+    background: var(--border);
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    flex-shrink: 0;
+  }
+
+  .contact-link-text {
+    flex: 1;
+  }
+
+  .contact-link-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--muted);
+    display: block;
+    margin-bottom: 0.15rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  .avail-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    background: rgba(74,222,128,0.08);
+    border: 1px solid rgba(74,222,128,0.2);
+    border-radius: 100px;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--green);
+    margin-bottom: 2rem;
+  }
+
+  .avail-dot {
+    width: 6px;
+    height: 6px;
+    background: var(--green);
+    border-radius: 50%;
+    animation: blink 1.5s ease-in-out infinite;
+  }
+
+  @keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+  }
+
+  /* SERVICES */
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 1.5rem;
+    margin-top: 1rem;
+  }
+
+  .service-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 1.75rem;
+    transition: border-color 0.2s;
+  }
+
+  .service-card:hover { border-color: var(--accent2); }
+
+  .service-num {
+    font-family: 'DM Serif Display', serif;
+    font-size: 2rem;
+    color: var(--border);
+    display: block;
+    margin-bottom: 1rem;
+  }
+
+  .service-title {
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+  }
+
+  .service-desc {
+    font-size: 0.875rem;
+    color: var(--muted);
+    line-height: 1.7;
+  }
+
+  /* FOOTER */
+  footer {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    padding: 2rem 3rem;
+    border-top: 1px solid var(--border);
+    font-family: 'DM Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--muted);
+  }
+
+  /* SCROLL REVEAL */
+  .reveal {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+
+  .reveal.visible {
+    opacity: 1;
+    transform: none;
+  }
+
+  /* MOBILE */
+  @media (max-width: 768px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { display: none; }
+    section { padding: 4rem 1.5rem; }
+    .hero { padding: 0 1.5rem; min-height: auto; padding-top: 8rem; padding-bottom: 4rem; }
+    .hero-stats { display: none; }
+    .exp-item { grid-template-columns: 1fr; gap: 0.75rem; }
+    .contact-grid { grid-template-columns: 1fr; gap: 2rem; }
+    .portfolio-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="#">MI_PORTFOLIO</a>
+  <ul class="nav-links">
+    <li><a href="#stack">Стек</a></li>
+    <li><a href="#experience">Опыт</a></li>
+    <li><a href="#portfolio">Работы</a></li>
+    <li><a href="#services">Услуги</a></li>
+    <li><a href="#contact">Контакты</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="hero">
+  <div class="hero-inner">
+    <div class="hero-tag">Senior BI Developer & Data Analytics Lead</div>
+    <h1>Данные,<br>которые <em>говорят</em><br>за себя.</h1>
+    <p class="hero-desc">
+      Превращаю сырые данные в решения, которые бизнес понимает и использует.
+      Power BI, SQL, 1С — архитектура, дашборды, ETL и управление командой.
+    </p>
+    <div class="hero-cta">
+      <a class="btn btn-primary" href="#contact">Написать мне</a>
+      <a class="btn btn-ghost" href="#portfolio">Смотреть работы</a>
+    </div>
+  </div>
+
+  <div class="hero-stats">
+    <div class="stat">
+      <span class="stat-num">5+</span>
+      <span class="stat-label">лет в BI</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num">2+</span>
+      <span class="stat-label">года Team Lead</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num">4</span>
+      <span class="stat-label">в команде</span>
+    </div>
+  </div>
+</section>
+
+<!-- STACK -->
+<section class="stack-section" id="stack">
+  <div class="section-label">Технологии</div>
+  <div class="section-title">Технический стек</div>
+
+  <div class="stack-grid reveal">
+    <div class="stack-item">
+      <span class="stack-icon">📊</span>
+      <div class="stack-name">Power BI</div>
+      <div class="stack-detail">Desktop · Service · Report Server</div>
+    </div>
+    <div class="stack-item">
+      <span class="stack-icon">🔢</span>
+      <div class="stack-name">DAX</div>
+      <div class="stack-detail">Сложные меры · DAX Studio · Tabular Editor</div>
+    </div>
+    <div class="stack-item">
+      <span class="stack-icon">⚡</span>
+      <div class="stack-name">Power Query (M)</div>
+      <div class="stack-detail">ETL · Трансформации · Загрузки</div>
+    </div>
+    <div class="stack-item">
+      <span class="stack-icon">🗄️</span>
+      <div class="stack-name">SQL</div>
+      <div class="stack-detail">MS SQL · MySQL · PostgreSQL</div>
+    </div>
+    <div class="stack-item">
+      <span class="stack-icon">🐍</span>
+      <div class="stack-name">Python</div>
+      <div class="stack-detail">Pandas · NumPy · Matplotlib</div>
+    </div>
+    <div class="stack-item">
+      <span class="stack-icon">🔗</span>
+      <div class="stack-name">1С</div>
+      <div class="stack-detail">Интеграция · Обмены данных · API</div>
+    </div>
+    <div class="stack-item">
+      <span class="stack-icon">🔄</span>
+      <div class="stack-name">ETL / Интеграции</div>
+      <div class="stack-detail">REST API · Git · Расписания обновлений</div>
+    </div>
+    <div class="stack-item">
+      <span class="stack-icon">🏗️</span>
+      <div class="stack-name">Архитектура данных</div>
+      <div class="stack-detail">Витрины · Реляционные модели · DWH</div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="section-label">Карьера</div>
+  <div class="section-title">Опыт работы</div>
+
+  <div class="exp-list">
+    <div class="exp-item reveal">
+      <div class="exp-meta">
+        <span class="exp-period">Янв 2023 — н.в.</span>
+        <span class="exp-company">ТОО «Компания Эврика»</span>
+      </div>
+      <div class="exp-body">
+        <div class="exp-role">Руководитель отдела аналитики<br>и управления данными</div>
+        <ul class="exp-points">
+          <li>Управление командой 4 специалистов: распределение задач, код-ревью, наставничество</li>
+          <li>Проектирование архитектуры хранения и обработки данных (витрины, модели)</li>
+          <li>Настройка интеграций между 1С, внешними API и БД, реализация ETL-процессов</li>
+          <li>Ведение переговоров с заказчиками, постановка ТЗ, контроль разработки витрин</li>
+          <li>Внедрил стандарты моделирования Power BI и процедуру code-review для DAX/SQL</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="exp-item reveal">
+      <div class="exp-meta">
+        <span class="exp-period">Сен 2020 — Янв 2023</span>
+        <span class="exp-company">ТОО «Компания Эврика»</span>
+      </div>
+      <div class="exp-body">
+        <div class="exp-role">BI Developer</div>
+        <ul class="exp-points">
+          <li>Разработка интерактивных дашбордов в Power BI: KPI, продажи, трафик с фокусом на UX/UI</li>
+          <li>Создание отчётов и витрин данных, интеграция источников</li>
+          <li>Работа с бизнес-требованиями, поддержка пользователей, сопровождение релизов</li>
+          <li>Подготовка документации и инструкций по использованию отчётов</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PORTFOLIO -->
+<section id="portfolio" style="background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);">
+  <div class="section-label">Работы</div>
+  <div class="section-title">Портфолио проектов</div>
+
+  <div class="portfolio-grid">
+
+    <a class="portfolio-card" href="https://app.powerbi.com/view?r=eyJrIjoiMzNhMDA3MjAtYmRhZi00MzVlLWIwM2MtNDQzODU1MDI3NWFhIiwidCI6ImViMGYyYmJhLWE1MzAtNDQ4Yi05ZmFhLWQ1ZjhlNzc2OWNiMSIsImMiOjl9" target="_blank" rel="noopener">
+      <div class="card-preview card-preview-bi">
+        <div class="mini-bars">
+          <div class="mini-bar"></div>
+          <div class="mini-bar"></div>
+          <div class="mini-bar"></div>
+          <div class="mini-bar"></div>
+          <div class="mini-bar"></div>
+          <div class="mini-bar"></div>
+          <div class="mini-bar"></div>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="card-tag">Power BI · DAX · SQL</div>
+        <div class="card-title">Аналитический дашборд</div>
+        <p class="card-desc">Интерактивный публичный отчёт с визуализацией ключевых бизнес-метрик. Построен с упором на UX и читаемость данных.</p>
+        <span class="card-link">Открыть отчёт</span>
+      </div>
+    </a>
+
+    <div class="portfolio-card" style="cursor: default; opacity: 0.6;">
+      <div class="card-preview" style="background: linear-gradient(135deg, #1a2a1a 0%, #0f1a0f 100%);">
+        <span style="font-size: 2.5rem;">🔄</span>
+      </div>
+      <div class="card-body">
+        <div class="card-tag">ETL · 1С · REST API</div>
+        <div class="card-title">Система интеграции данных</div>
+        <p class="card-desc">Архитектура обмена данными между 1С, внешними API и хранилищем данных. Автоматизированные расписания обновлений.</p>
+        <span class="card-link" style="color: var(--muted);">Скоро</span>
+      </div>
+    </div>
+
+    <div class="portfolio-card" style="cursor: default; opacity: 0.6;">
+      <div class="card-preview" style="background: linear-gradient(135deg, #2a1a1a 0%, #1a0f0f 100%);">
+        <span style="font-size: 2.5rem;">🏪</span>
+      </div>
+      <div class="card-body">
+        <div class="card-tag">Python · SQL · BI</div>
+        <div class="card-title">Система распределения товаров</div>
+        <p class="card-desc">Алгоритм распределения товаров по магазинам на основе спроса. Cross-team проект с Web и 1С отделами.</p>
+        <span class="card-link" style="color: var(--muted);">Скоро</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="section-label">Фриланс</div>
+  <div class="section-title">Что я делаю на заказ</div>
+
+  <div class="services-grid">
+    <div class="service-card reveal">
+      <span class="service-num">01</span>
+      <div class="service-title">Power BI дашборды</div>
+      <p class="service-desc">Разработка интерактивных дашбордов с нуля или доработка существующих. DAX-меры, модели данных, публикация в Service.</p>
+    </div>
+    <div class="service-card reveal">
+      <span class="service-num">02</span>
+      <div class="service-title">ETL & интеграции</div>
+      <p class="service-desc">Настройка потоков данных между источниками: 1С, API, базы данных. Power Query, SQL-скрипты, расписания обновлений.</p>
+    </div>
+    <div class="service-card reveal">
+      <span class="service-num">03</span>
+      <div class="service-title">SQL-аналитика</div>
+      <p class="service-desc">Написание и оптимизация SQL-запросов. Построение витрин данных, агрегаций, ad-hoc аналитика. MS SQL, PostgreSQL, MySQL.</p>
+    </div>
+    <div class="service-card reveal">
+      <span class="service-num">04</span>
+      <div class="service-title">Аудит BI-решений</div>
+      <p class="service-desc">Разбор существующих отчётов и моделей данных. Оптимизация производительности, рефакторинг DAX, стандартизация.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact-section" id="contact">
+  <div class="section-label">Связь</div>
+  <div class="section-title">Начнём работать?</div>
+
+  <div class="contact-grid">
+    <div>
+      <div class="avail-badge">
+        <div class="avail-dot"></div>
+        Открыт к проектам
+      </div>
+      <p class="contact-intro">
+        Готов взяться за фриланс-проекты и рассмотреть интересные предложения о работе.
+        Пишите в Telegram — отвечаю быстро.
+      </p>
+      <p style="font-size: 0.85rem; color: var(--muted);">
+        Казахстан · Алматы<br>
+        Работаю удалённо с клиентами из СНГ и не только.
+      </p>
+    </div>
+
+    <div class="contact-links">
+      <a class="contact-link" href="https://t.me/YOUR_TELEGRAM" target="_blank">
+        <div class="contact-link-icon">✈️</div>
+        <div class="contact-link-text">
+          <span class="contact-link-label">Telegram</span>
+          @YOUR_HANDLE
+        </div>
+      </a>
+      <a class="contact-link" href="mailto:ivanihinmaxim@gmail.com">
+        <div class="contact-link-icon">📧</div>
+        <div class="contact-link-text">
+          <span class="contact-link-label">Email</span>
+          ivanihinmaxim@gmail.com
+        </div>
+      </a>
+      <a class="contact-link" href="https://linkedin.com/in/YOUR_PROFILE" target="_blank">
+        <div class="contact-link-icon">💼</div>
+        <div class="contact-link-text">
+          <span class="contact-link-label">LinkedIn</span>
+          Максим Иванихин
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span>© 2025 Максим Иванихин</span>
+  &nbsp;·&nbsp;
+  <span>Разработано с ☕ и DAX</span>
+</footer>
+
+<script>
+  // Scroll reveal
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
